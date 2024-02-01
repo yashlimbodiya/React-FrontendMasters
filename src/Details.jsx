@@ -1,15 +1,17 @@
-import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import fetchPet from "./fetchPet";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
+import AdoptedPetContext from "./AdoptedPetContext";
 import Modal from "./Modal";
 
 const Details = () => {
   const { id } = useParams();
   const [showModal, setShowModal] = useState(false);
-
+  const navigate = useNavigate();
+  const [_, setAdoptedPet] = useContext(AdoptedPetContext);
   const results = useQuery(["details", id], fetchPet);
   //useQuery search for "details" with given id if it found in cache(in-memory) it proceeds ahead
   //otherwise call the api definded in the third parameter
@@ -51,7 +53,14 @@ const Details = () => {
             <div>
               <h1>Would you like to adopt {pet.name}?</h1>
               <div className="buttons">
-                <button>Yes</button>
+                <button
+                  onClick={() => {
+                    setAdoptedPet(pet);
+                    navigate("/");
+                  }}
+                >
+                  Yes
+                </button>
                 <button
                   onClick={() => {
                     setShowModal(false);
