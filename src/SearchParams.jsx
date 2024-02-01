@@ -79,12 +79,7 @@ const SearchParams = () => {
 
         <label htmlFor="breed">
           Breed
-          <select
-            disabled={!breeds.length}
-            id="breed"
-            name="breed"
-            onBlur={(e) => setBreed(e.target.value)}
-          >
+          <select disabled={!breeds.length} id="breed" name="breed">
             <option />
             {breeds.map((breed) => (
               <option key={breed} value={breed}>
